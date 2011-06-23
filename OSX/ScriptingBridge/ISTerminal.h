@@ -8,10 +8,13 @@
 
 #import "Terminal.h"
 
-@interface ISTerminal : NSObject {}
+@interface ISTerminal : NSObject
 
++ (NSString *)appId;
 + (TerminalApplication *)terminal;
 + (NSString *)escapePath:(NSString*)path;
 + (void)shellTo:(NSString *)path;
++ (void)shellTo:(NSString *)path clear:(BOOL)clear;
++ (void)runCommand:(NSString *)command;
 
 @end

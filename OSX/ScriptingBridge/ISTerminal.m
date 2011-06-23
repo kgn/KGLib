@@ -12,10 +12,14 @@
 
 @implementation ISTerminal
 
++ (NSString *)appId{
+    return @"com.apple.Terminal";
+}
+
 + (TerminalApplication *)terminal{
     static TerminalApplication *terminalApp = nil;
     if(!terminalApp){
-        terminalApp = [SBApplication applicationWithBundleIdentifier:@"com.apple.Terminal"];
+        terminalApp = [SBApplication applicationWithBundleIdentifier:[ISTerminal appId]];
     }
     return terminalApp;
 }
@@ -55,15 +59,24 @@
 }
 
 + (void)shellTo:(NSString *)path{
+    [ISTerminal shellTo:path clear:YES];
+}
+
++ (void)shellTo:(NSString *)path clear:(BOOL)clear{
+    NSString *clearCmd = clear ? @";clear;" : @"";
+    NSString *command = [NSString stringWithFormat: @"cd %@%@", 
+                         [self escapePath:path], clearCmd];
+    [ISTerminal runCommand:command];
+}
+
++ (void)runCommand:(NSString *)command{
     TerminalTab *currentTab = nil;
     if(![[ISTerminal terminal] isRunning]){
         SBElementArray *terminalWindows = [[ISTerminal terminal] windows];
         TerminalWindow *lastTerminalWindow = [terminalWindows lastObject];
         currentTab = [[lastTerminalWindow tabs] lastObject];
     }
-
-    // cd to the path
-    NSString *command = [NSString stringWithFormat: @"cd %@;clear;", [self escapePath:path]];
+    
     [[ISTerminal terminal] doScript:command in:currentTab];
     [[ISTerminal terminal] activate];
 }
