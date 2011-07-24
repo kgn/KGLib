@@ -3,7 +3,7 @@
 //  InScopeLib
 //
 //  Created by David Keegan on 5/23/09.
-//  Copyright 2009 InScopeApps{+}. All rights reserved.
+//  Copyright 2009-2011 InScopeApps{+}. All rights reserved.
 //
 
 #import "ISFinder.h"
@@ -13,7 +13,7 @@
 + (FinderApplication *)finder{
     static FinderApplication *finderApp = nil;
     if(!finderApp){
-        finderApp = [SBApplication applicationWithBundleIdentifier:@"com.apple.finder"];
+        finderApp = [[SBApplication applicationWithBundleIdentifier:@"com.apple.finder"] retain];
     }
     return finderApp;
 }
@@ -32,11 +32,13 @@
 
 + (NSArray *)selectedFinderURLs{
     NSMutableArray *selected = [[NSMutableArray alloc] init];
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init]; 
     for(FinderItem *item in [[[ISFinder finder] selection] get]){
         if([item respondsToSelector:@selector(URL)]){
             [selected addObject:[[NSURL URLWithString:[item URL]] path]];
         }
     }
+    [pool drain];
     return [selected autorelease];
 }
 
