@@ -19,7 +19,7 @@
 + (TerminalApplication *)terminal{
     static TerminalApplication *terminalApp = nil;
     if(!terminalApp){
-        terminalApp = [SBApplication applicationWithBundleIdentifier:[ISTerminal appId]];
+        terminalApp = [[SBApplication applicationWithBundleIdentifier:[ISTerminal appId]] retain];
     }
     return terminalApp;
 }
