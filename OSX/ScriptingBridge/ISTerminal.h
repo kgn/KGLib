@@ -14,7 +14,7 @@
 + (TerminalApplication *)terminal;
 + (NSString *)escapePath:(NSString*)path;
 + (void)shellTo:(NSString *)path;
-+ (void)shellTo:(NSString *)path clear:(BOOL)clear;
++ (void)shellTo:(NSString *)path clear:(BOOL)clear additionalCommand:(NSString *)additionalCommand;
 + (void)runCommand:(NSString *)command;
 
 @end

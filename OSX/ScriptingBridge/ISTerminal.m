@@ -59,13 +59,16 @@
 }
 
 + (void)shellTo:(NSString *)path{
-    [ISTerminal shellTo:path clear:YES];
+    [ISTerminal shellTo:path clear:YES additionalCommand:nil];
 }
 
-+ (void)shellTo:(NSString *)path clear:(BOOL)clear{
-    NSString *clearCmd = clear ? @";clear;" : @"";
++ (void)shellTo:(NSString *)path clear:(BOOL)clear additionalCommand:(NSString *)additionalCommand{
+    NSString *clearCmd = clear ? @";clear" : @"";
     NSString *command = [NSString stringWithFormat: @"cd %@%@", 
                          [self escapePath:path], clearCmd];
+    if([additionalCommand length]){
+        command = [NSString stringWithFormat:@"%@;%@", command, additionalCommand];
+    }    
     [ISTerminal runCommand:command];
 }
 
