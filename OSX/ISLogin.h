@@ -1,14 +1,15 @@
 //
-//  LoginStartup.h
-//  RockStar
+//  ISLogin.m
+//  InScopeLib
 //
 //  Created by David Keegan on 1/6/11.
-//  Copyright 2011 InScopeApps {+}. All rights reserved.
 //
 //  Made possible by: http://stackoverflow.com/questions/815063/how-do-you-make-your-app-open-at-login/2318004#2318004
 //
 
-@interface ISLogin : NSObject {}
+#import <Foundation/Foundation.h>
+
+@interface ISLogin : NSObject
 
 + (NSURL *)appURL;
 

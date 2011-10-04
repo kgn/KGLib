@@ -3,7 +3,6 @@
 //  InScopeLib
 //
 //  Created by David Keegan on 7/2/09.
-//  Copyright 2009 InScopeApps{+}. All rights reserved.
 //
 
 #import "ISPasteboard.h"

@@ -1,11 +1,11 @@
 //
 //  ISTerminal.h
-//  ShellTo
+//  InScopeLib
 //
 //  Created by David Keegan on 1/31/11.
-//  Copyright 2011 InScopeApps {+}. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
 #import "Terminal.h"
 
 @interface ISTerminal : NSObject

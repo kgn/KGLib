@@ -3,7 +3,6 @@
 //  InScopeLib
 //
 //  Created by David Keegan on 8/12/09.
-//  Copyright 2009 InScopeApps{+}. All rights reserved.
 //
 
 #import "ISProcess.h"
@@ -12,12 +11,12 @@
 
 + (void)transformToForegroundApplication{
     //change process into front process
-    ProcessSerialNumber psn = {0, kCurrentProcess}; 
+    ProcessSerialNumber psn = {0, kCurrentProcess};
     TransformProcessType(&psn, kProcessTransformToForegroundApplication);
 }
 
 + (void)setApplicationFront{
-    ProcessSerialNumber psn = {0, kCurrentProcess}; 
+    ProcessSerialNumber psn = {0, kCurrentProcess};
     SetFrontProcess(&psn);
 }
 

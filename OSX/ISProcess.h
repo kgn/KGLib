@@ -3,9 +3,11 @@
 //  InScopeLib
 //
 //  Created by David Keegan on 8/12/09.
-//  Copyright 2009 InScopeApps{+}. All rights reserved.
 //
-//  This class has methods for transforming the process.
+//  Class methods for transforming the process.
+//
+
+#import <Foundation/Foundation.h>
 
 @interface ISProcess : NSObject
 

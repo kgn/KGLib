@@ -1,9 +1,8 @@
 //
-//  LoginStartup.m
-//  RockStar
+//  ISLogin.m
+//  InScopeLib
 //
 //  Created by David Keegan on 1/6/11.
-//  Copyright 2011 InScopeApps {+}. All rights reserved.
 //
 
 #import "ISLogin.h"
@@ -27,14 +26,14 @@
         NSArray *currentLoginItems = [NSMakeCollectable(LSSharedFileListCopySnapshot(loginItems, &seed)) autorelease];
         for(id itemObject in currentLoginItems){
             LSSharedFileListItemRef item = (LSSharedFileListItemRef)itemObject;
-            
+
             UInt32 resolutionFlags = kLSSharedFileListNoUserInteraction | kLSSharedFileListDoNotMountVolumes;
             CFURLRef URL = NULL;
             OSStatus err = LSSharedFileListItemResolve(item, resolutionFlags, &URL, /*outRef*/ NULL);
             if(err == noErr){
                 foundIt = CFEqual(URL, itemURL);
                 CFRelease(URL);
-                
+
                 if(foundIt){
                     break;
                 }
@@ -58,30 +57,30 @@
         NSArray *currentLoginItems = [NSMakeCollectable(LSSharedFileListCopySnapshot(loginItems, &seed)) autorelease];
         for(id itemObject in currentLoginItems){
             LSSharedFileListItemRef item = (LSSharedFileListItemRef)itemObject;
-            
+
             UInt32 resolutionFlags = kLSSharedFileListNoUserInteraction | kLSSharedFileListDoNotMountVolumes;
             CFURLRef URL = NULL;
             OSStatus err = LSSharedFileListItemResolve(item, resolutionFlags, &URL, /*outRef*/ NULL);
             if (err == noErr) {
                 Boolean foundIt = CFEqual(URL, itemURL);
                 CFRelease(URL);
-                
+
                 if (foundIt) {
                     existingItem = item;
                     break;
                 }
             }
         }
-        
+
         if(enabled && (existingItem == NULL)){
-            LSSharedFileListInsertItemURL(loginItems, kLSSharedFileListItemBeforeFirst, 
+            LSSharedFileListInsertItemURL(loginItems, kLSSharedFileListItemBeforeFirst,
                                           NULL, NULL, (CFURLRef)itemURL, NULL, NULL);
         }else if(!enabled && (existingItem != NULL)){
             LSSharedFileListItemRemove(loginItems, existingItem);
         }
-        
+
         CFRelease(loginItems);
-    }       
+    }
 }
 
 @end
