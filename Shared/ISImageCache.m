@@ -1,6 +1,6 @@
 //
 //  ISImageCache.m
-//  Play by Play
+//  InScopeLib
 //
 //  Created by David Keegan on 10/5/11.
 //
