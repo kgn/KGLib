@@ -29,7 +29,7 @@
 }
 
 - (BOOL)containsKey:(id)key{
-    return ([imageRetrievedCache member:key] != nil);
+    return [imageRetrievedCache containsObject:key];
 }
 
 - (void)registerKey:(id)key{
