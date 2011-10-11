@@ -20,5 +20,7 @@
 - (BOOL)containsKey:(id)key;
 - (ISImageCacheImage *)imageForKey:(id)key;
 - (void)setImage:(ISImageCacheImage *)image forKey:(id)key;
+- (void)removeKey:(id)key;
+- (void)removeKeysNotInSet:(NSSet *)keys;
 
 @end

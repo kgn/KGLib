@@ -44,4 +44,21 @@
     [imageCache setObject:image forKey:key];
 }
 
+- (void)removeKey:(id)key{
+    [imageCache removeObjectForKey:key];
+    [imageRetrievedCache removeObject:key];
+}
+
+- (void)removeKeysNotInSet:(NSSet *)keys{
+    NSMutableSet *removeKeys = [NSSet set];
+    [imageRetrievedCache enumerateObjectsUsingBlock:^(id key, BOOL *stop){
+        if(![keys containsObject:key]){
+            [removeKeys addObject:key];
+        }
+    }];
+    [removeKeys enumerateObjectsUsingBlock:^(id key, BOOL *stop){
+        [self removeKey:key];
+    }];    
+}
+
 @end
