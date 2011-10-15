@@ -35,9 +35,7 @@
 @end
 
 
-@implementation ISNibCell{
-    BOOL _shouldClearSubviews;
-}
+@implementation ISNibCell
 
 @synthesize controller = _controller;
 
