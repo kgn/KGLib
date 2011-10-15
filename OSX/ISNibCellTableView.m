@@ -25,7 +25,12 @@
     return self;
 }
 
+- (void)setIsHighlighted:(BOOL)highlight{
+    // implement this in the subclass if you want custom highlight behavior
+}
+
 -(void)showViews:(NSView*)parent frame:(NSRect)cellFrame highlight:(BOOL)highlight{
+    [self setIsHighlighted:highlight];
     [self.detailView setFrame:cellFrame];
     if([self.detailView superview] != parent){
 		[parent addSubview:self.detailView];
