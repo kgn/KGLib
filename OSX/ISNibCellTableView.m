@@ -7,9 +7,13 @@
 
 #import "ISNibCellTableView.h"
 
+@interface ISNibCellController()
+- (void)showViews:(NSView*)parent frame:(NSRect)cellFrame highlight:(BOOL)highlight;
+@end
+
+
 @implementation ISNibCellController
 
-@synthesize url = _url;
 @synthesize detailView = _detailView;
 
 - (id)initWithNibName:(NSString *)nibName{
@@ -21,7 +25,7 @@
     return self;
 }
 
--(void)showViews:(NSView*)parent frame:(NSRect)cellFrame highlight:(BOOL)highlight{
+-(void)showViews:(NSView*)parent frame:(NSRect)cellFrame highlight:(BOOL)highlight{  
     [self.detailView setFrame:cellFrame];
     if([self.detailView superview] != parent){
 		[parent addSubview:self.detailView];
@@ -31,16 +35,29 @@
 @end
 
 
-@implementation ISNibCell
+@implementation ISNibCell{
+    BOOL _shouldClearSubviews;
+}
 
 @synthesize controller = _controller;
 
--(void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView{
-	[self.controller showViews:controlView frame:cellFrame highlight:self.isHighlighted];
+-(void)drawInteriorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView{
+    [self.controller showViews:controlView frame:cellFrame highlight:self.isHighlighted];
 }
 
 @end
 
+
 @implementation ISNibCellTableView
 @synthesize cellControllers = _cellControllers;
+- (void)reloadData{
+    //TODO: this is working to hide the duplicate cells, but it isn't cleaning them up
+    @autoreleasepool{
+        for(NSView *subview in [self subviews]){
+            [subview setHidden:YES];
+//            [subview removeFromSuperviewWithoutNeedingDisplay];            
+        }
+    }
+    [super reloadData];
+}
 @end

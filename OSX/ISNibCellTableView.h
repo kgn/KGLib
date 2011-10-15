@@ -9,13 +9,8 @@
 #import <AppKit/AppKit.h>
 
 @interface ISNibCellController : NSObject
-
-@property (strong) NSURL *url;
 @property (strong) IBOutlet NSView *detailView;
-
 - (id)initWithNibName:(NSString *)nibName;
--(void)showViews:(NSView*)parent frame:(NSRect)cellFrame highlight:(BOOL)highlight;
-
 @end
 
 @interface ISNibCell : NSCell
