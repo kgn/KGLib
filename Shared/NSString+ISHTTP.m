@@ -27,7 +27,7 @@
                                             (__bridge CFStringRef)self, NULL,
                                             (CFStringRef)@"!*'();:@&=+$,/?%#[]",
                                             kCFStringEncodingUTF8);
-    return (__bridge NSString *)escaped;
+    return [NSString stringWithString:(__bridge NSString *)escaped];
 }
 
 @end
