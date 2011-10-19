@@ -9,7 +9,7 @@
 #import <AppKit/AppKit.h>
 
 @interface ISNibCellController : NSObject
-@property (strong) IBOutlet NSView *detailView;
+@property (strong, nonatomic) IBOutlet NSView *detailView;
 - (id)initWithNibName:(NSString *)nibName;
 // This should only be implemented in a subclass.
 // It should not be called directly, it will be
