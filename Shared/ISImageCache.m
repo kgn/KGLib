@@ -8,64 +8,66 @@
 #import "ISImageCache.h"
 
 @implementation ISImageCache{
-    NSMutableDictionary *retainCache;
-    NSMutableDictionary *imageCache;
+    NSMutableDictionary *_retainCache;
+    NSMutableDictionary *_imageCache;
+    NSMutableSet *_didLoad;
 }
 
 - (id)init{
     if((self = [super init])){
-        retainCache = [[NSMutableDictionary alloc] init];
-        imageCache = [[NSMutableDictionary alloc] init];
+        _retainCache = [[NSMutableDictionary alloc] init];
+        _imageCache = [[NSMutableDictionary alloc] init];
+        _didLoad = [[NSMutableSet alloc] init];
     }
     return self;
 }
 
 - (id)initWithCapacity:(NSUInteger)capacity{
     if((self = [super init])){
-        retainCache = [[NSMutableDictionary alloc] initWithCapacity:capacity];
-        imageCache = [[NSMutableDictionary alloc] initWithCapacity:capacity];
+        _retainCache = [[NSMutableDictionary alloc] initWithCapacity:capacity];
+        _imageCache = [[NSMutableDictionary alloc] initWithCapacity:capacity];
+        _didLoad = [[NSMutableSet alloc] initWithCapacity:capacity];
     }
     return self;
 }
 
-- (BOOL)containsKey:(id)key{
-    return ([retainCache objectForKey:key] != nil);
+- (BOOL)didLoad:(id)key{
+    return [_didLoad containsObject:key];
+}
+
+- (void)setDidLoad:(id)key{
+    [_didLoad addObject:key];
 }
 
 - (void)retainKey:(id)key{
-    NSNumber *count = [retainCache objectForKey:key];
-    if(count == nil){
-        count = [NSNumber numberWithInteger:0];
-    }else{ 
-        NSInteger iCount = [count integerValue]+1;
-        count = [NSNumber numberWithInteger:iCount];
-    }
-    NSLog(@"retain: %@=%@", key, count);
-    [retainCache setObject:count forKey:key];
+    NSInteger newCount = [[_retainCache objectForKey:key] integerValue]+1;
+    NSLog(@"retain: %@=%lu", key, newCount);
+    [_retainCache setObject:[NSNumber numberWithInteger:newCount] forKey:key];
 }
 
 - (ISImageCacheImage *)imageForKey:(id)key{
-    return [imageCache objectForKey:key];
+    return [_imageCache objectForKey:key];
 }
 
 - (void)setImage:(ISImageCacheImage *)image forKey:(id)key{
-    [imageCache setObject:image forKey:key];
+    [_imageCache setObject:image forKey:key];
 }
 
 - (void)releaseKey:(id)key{
-    NSInteger newCount = [[retainCache objectForKey:key] integerValue]-1;
+    NSInteger newCount = [[_retainCache objectForKey:key] integerValue]-1;
     if(newCount <= 0){
         NSLog(@"release: %@", key);
         [self removeKey:key];
     }else{
         NSLog(@"release: %@=%lu", key, newCount);
-        [retainCache setObject:[NSNumber numberWithInteger:newCount] forKey:key];
+        [_retainCache setObject:[NSNumber numberWithInteger:newCount] forKey:key];
     }
 }
 
 - (void)removeKey:(id)key{
-    [imageCache removeObjectForKey:key];
-    [retainCache removeObjectForKey:key];
+    [_imageCache removeObjectForKey:key];
+    [_retainCache removeObjectForKey:key];
+    [_didLoad removeObject:key];
 }
 
 @end

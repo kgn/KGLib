@@ -17,7 +17,8 @@
 
 - (id)initWithCapacity:(NSUInteger)capacity;
 - (void)retainKey:(id)key;
-- (BOOL)containsKey:(id)key;
+- (BOOL)didLoad:(id)key;
+- (void)setDidLoad:(id)key;
 - (ISImageCacheImage *)imageForKey:(id)key;
 - (void)setImage:(ISImageCacheImage *)image forKey:(id)key;
 - (void)releaseKey:(id)key;
