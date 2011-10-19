@@ -8,13 +8,13 @@
 #import "ISImageCache.h"
 
 @implementation ISImageCache{
-    NSMutableSet *imageRetrievedCache;
+    NSMutableDictionary *retainCache;
     NSMutableDictionary *imageCache;
 }
 
 - (id)init{
     if((self = [super init])){
-        imageRetrievedCache = [[NSMutableSet alloc] init];
+        retainCache = [[NSMutableDictionary alloc] init];
         imageCache = [[NSMutableDictionary alloc] init];
     }
     return self;
@@ -22,18 +22,26 @@
 
 - (id)initWithCapacity:(NSUInteger)capacity{
     if((self = [super init])){
-        imageRetrievedCache = [[NSMutableSet alloc] initWithCapacity:capacity];
+        retainCache = [[NSMutableDictionary alloc] initWithCapacity:capacity];
         imageCache = [[NSMutableDictionary alloc] initWithCapacity:capacity];
     }
     return self;
 }
 
 - (BOOL)containsKey:(id)key{
-    return [imageRetrievedCache containsObject:key];
+    return ([retainCache objectForKey:key] != nil);
 }
 
-- (void)registerKey:(id)key{
-    [imageRetrievedCache addObject:key];
+- (void)retainKey:(id)key{
+    NSNumber *count = [retainCache objectForKey:key];
+    if(count == nil){
+        count = [NSNumber numberWithInteger:0];
+    }else{ 
+        NSInteger iCount = [count integerValue]+1;
+        count = [NSNumber numberWithInteger:iCount];
+    }
+    NSLog(@"retain: %@=%@", key, count);
+    [retainCache setObject:count forKey:key];
 }
 
 - (ISImageCacheImage *)imageForKey:(id)key{
@@ -44,21 +52,20 @@
     [imageCache setObject:image forKey:key];
 }
 
-- (void)removeKey:(id)key{
-    [imageCache removeObjectForKey:key];
-    [imageRetrievedCache removeObject:key];
+- (void)releaseKey:(id)key{
+    NSInteger newCount = [[retainCache objectForKey:key] integerValue]-1;
+    if(newCount <= 0){
+        NSLog(@"release: %@", key);
+        [self removeKey:key];
+    }else{
+        NSLog(@"release: %@=%lu", key, newCount);
+        [retainCache setObject:[NSNumber numberWithInteger:newCount] forKey:key];
+    }
 }
 
-- (void)removeKeysNotInSet:(NSSet *)keys{
-    NSMutableSet *removeKeys = [NSSet set];
-    [imageRetrievedCache enumerateObjectsUsingBlock:^(id key, BOOL *stop){
-        if(![keys containsObject:key]){
-            [removeKeys addObject:key];
-        }
-    }];
-    [removeKeys enumerateObjectsUsingBlock:^(id key, BOOL *stop){
-        [self removeKey:key];
-    }];    
+- (void)removeKey:(id)key{
+    [imageCache removeObjectForKey:key];
+    [retainCache removeObjectForKey:key];
 }
 
 @end

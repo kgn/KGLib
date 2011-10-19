@@ -16,11 +16,11 @@
 @interface ISImageCache : NSObject
 
 - (id)initWithCapacity:(NSUInteger)capacity;
-- (void)registerKey:(id)key;
+- (void)retainKey:(id)key;
 - (BOOL)containsKey:(id)key;
 - (ISImageCacheImage *)imageForKey:(id)key;
 - (void)setImage:(ISImageCacheImage *)image forKey:(id)key;
+- (void)releaseKey:(id)key;
 - (void)removeKey:(id)key;
-- (void)removeKeysNotInSet:(NSSet *)keys;
 
 @end
