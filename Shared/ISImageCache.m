@@ -41,7 +41,6 @@
 
 - (void)retainKey:(id)key{
     NSInteger newCount = [[_retainCache objectForKey:key] integerValue]+1;
-    NSLog(@"retain: %@=%lu", key, newCount);
     [_retainCache setObject:[NSNumber numberWithInteger:newCount] forKey:key];
 }
 
@@ -56,10 +55,8 @@
 - (void)releaseKey:(id)key{
     NSInteger newCount = [[_retainCache objectForKey:key] integerValue]-1;
     if(newCount <= 0){
-        NSLog(@"release: %@", key);
         [self removeKey:key];
     }else{
-        NSLog(@"release: %@=%lu", key, newCount);
         [_retainCache setObject:[NSNumber numberWithInteger:newCount] forKey:key];
     }
 }
