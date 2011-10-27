@@ -29,6 +29,7 @@
 
     //convert the short month string into the month's number
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:NSGregorianCalendar]];
     NSArray *shortMonths = [dateFormatter shortMonthSymbols];
     NSInteger compileMonth = [shortMonths indexOfObject:[compileDateArray objectAtIndex:0]]+1;
 
