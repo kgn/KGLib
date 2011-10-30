@@ -17,7 +17,7 @@
 @synthesize detailView = _detailView;
 
 - (id)initWithNibName:(NSString *)nibName{
-	if((self = [super init])){
+    if((self = [super init])){
         if(![NSBundle loadNibNamed:nibName owner:self]){
             self = nil;
         }
@@ -33,7 +33,7 @@
     [self setIsHighlighted:highlight];
     [self.detailView setFrame:cellFrame];
     if([self.detailView superview] != parent){
-		[parent addSubview:self.detailView];
+        [parent addSubview:self.detailView];
     }
 }
 
