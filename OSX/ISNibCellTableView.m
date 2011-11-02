@@ -7,15 +7,8 @@
 
 #import "ISNibCellTableView.h"
 
-@interface ISNibCellController()
-- (void)showViews:(NSView*)parent frame:(NSRect)cellFrame highlight:(BOOL)highlight;
-@end
-
-
 @implementation ISNibCellController
-
 @synthesize detailView = _detailView;
-
 - (id)initWithNibName:(NSString *)nibName{
     if((self = [super init])){
         if(![NSBundle loadNibNamed:nibName owner:self]){
@@ -24,35 +17,31 @@
     }
     return self;
 }
-
-- (void)setIsHighlighted:(BOOL)highlight{
-    // implement this in the subclass if you want custom highlight behavior
-}
-
--(void)showViews:(NSView*)parent frame:(NSRect)cellFrame highlight:(BOOL)highlight{
-    [self setIsHighlighted:highlight];
+- (void)showInView:(NSView *)parent withFrame:(NSRect)cellFrame highlight:(BOOL)highlight{
     [self.detailView setFrame:cellFrame];
     if([self.detailView superview] != parent){
         [parent addSubview:self.detailView];
     }
 }
-
 @end
 
 
 @implementation ISNibCell
-
 @synthesize controller = _controller;
-
--(void)drawInteriorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView{
-    [self.controller showViews:controlView frame:cellFrame highlight:self.isHighlighted];
+- (void)drawWithFrame:(NSRect)cellFrame inView:(NSView*)controlView{
+    cellFrame.size.width = controlView.bounds.size.width;
+    [self.controller showInView:controlView withFrame:cellFrame highlight:self.isHighlighted];
 }
-
 @end
 
 
 @implementation ISNibCellTableView
 @synthesize cellControllers = _cellControllers;
+- (void)awakeFromNib{
+	ISNibCell* cell = [[ISNibCell alloc] init];
+	[[[self tableColumns] objectAtIndex:0] setDataCell:cell];
+    [self setIntercellSpacing:NSZeroSize];
+}
 - (NSArray *)cellControllers{
     return _cellControllers;
 }

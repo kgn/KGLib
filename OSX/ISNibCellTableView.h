@@ -11,10 +11,7 @@
 @interface ISNibCellController : NSObject
 @property (strong, nonatomic) IBOutlet NSView *detailView;
 - (id)initWithNibName:(NSString *)nibName;
-// This should only be implemented in a subclass.
-// It should not be called directly, it will be
-// called when the cell is highlighted
-- (void)setIsHighlighted:(BOOL)highlight;
+- (void)showInView:(NSView *)parent withFrame:(NSRect)cellFrame highlight:(BOOL)highlight;
 @end
 
 @interface ISNibCell : NSCell
