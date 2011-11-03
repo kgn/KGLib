@@ -29,7 +29,6 @@
 @implementation ISNibCell
 @synthesize controller = _controller;
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView*)controlView{
-    cellFrame.size.width = controlView.bounds.size.width;
     [self.controller showInView:controlView withFrame:cellFrame highlight:self.isHighlighted];
 }
 @end
@@ -39,8 +38,10 @@
 @synthesize cellControllers = _cellControllers;
 - (void)awakeFromNib{
 	ISNibCell* cell = [[ISNibCell alloc] init];
-	[[[self tableColumns] objectAtIndex:0] setDataCell:cell];
-    [self setIntercellSpacing:NSZeroSize];
+    [self setIntercellSpacing:NSZeroSize];    
+    NSTableColumn *firstColumn = [[self tableColumns] objectAtIndex:0];
+    [firstColumn setWidth:self.bounds.size.width];    
+	[firstColumn setDataCell:cell];
 }
 - (NSArray *)cellControllers{
     return _cellControllers;
