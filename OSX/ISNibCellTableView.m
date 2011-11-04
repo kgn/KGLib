@@ -40,7 +40,9 @@
 	ISNibCell* cell = [[ISNibCell alloc] init];
     [self setIntercellSpacing:NSZeroSize];    
     NSTableColumn *firstColumn = [[self tableColumns] objectAtIndex:0];
-    [firstColumn setWidth:self.bounds.size.width];    
+    // This doesn't seem to work under Snow Leopard,
+    // Make sure the set the correct column width in IB
+//    [firstColumn setWidth:self.bounds.size.width];
 	[firstColumn setDataCell:cell];
 }
 - (NSArray *)cellControllers{
