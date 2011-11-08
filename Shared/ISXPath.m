@@ -15,8 +15,11 @@ NSString *xmlCharToNSString(xmlChar *value){
     if(value == NULL){
         return nil;
     }
-    return [NSString stringWithCString:(const char *)value
-                              encoding:NSUTF8StringEncoding];
+    NSString *string =
+    [NSString stringWithCString:(const char *)value
+                       encoding:NSUTF8StringEncoding];
+    xmlFree(value);
+    return string;
 }
 
 NSString *attrValue(xmlNodePtr node, const char *name){
