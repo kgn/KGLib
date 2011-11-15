@@ -10,6 +10,7 @@
 @interface NSArray(IS)
 
 - (id)firstObject;
+- (NSArray *)firstObjects:(NSUInteger)count;
 - (NSArray *)lastObjects:(NSUInteger)count;
 
 @end

@@ -13,17 +13,22 @@
     return [self objectAtIndex:0];
 }
 
+- (NSArray *)firstObjects:(NSUInteger)count{
+    NSRange range = NSMakeRange(0, MIN(count, [self count]));
+    return [self subarrayWithRange:range];
+}
+
 - (NSArray *)lastObjects:(NSUInteger)count{
-    NSRange theRange;
+    NSRange range;
     NSUInteger arrayCount = [self count];
     if(arrayCount > count){
-        theRange.location = arrayCount-count;
-        theRange.length = count;
+        range.location = arrayCount-count;
+        range.length = count;
     }else{
-        theRange.location = 0;
-        theRange.length = [self count];
+        range.location = 0;
+        range.length = [self count];
     }
-    return [self subarrayWithRange:theRange];
+    return [self subarrayWithRange:range];
 }
 
 @end
