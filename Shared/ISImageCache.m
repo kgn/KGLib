@@ -49,7 +49,9 @@
 }
 
 - (void)setImage:(ISImageCacheImage *)image forKey:(id)key{
-    [_imageCache setObject:image forKey:key];
+    if(image != nil){
+        [_imageCache setObject:image forKey:key];
+    }
 }
 
 - (void)releaseKey:(id)key{

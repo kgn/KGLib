@@ -5,11 +5,11 @@
 //  Created by David Keegan on 10/5/11.
 //
 
-#import <Foundation/Foundation.h>
-
 #if TARGET_OS_IPHONE
+#import <UIKit/UIKit.h>
 #define ISImageCacheImage UIImage
 #else
+#import <Cocoa/Cocoa.h>
 #define ISImageCacheImage NSImage
 #endif
 
