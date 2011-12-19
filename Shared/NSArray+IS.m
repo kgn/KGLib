@@ -26,7 +26,7 @@
         range.length = count;
     }else{
         range.location = 0;
-        range.length = [self count];
+        range.length = arrayCount;
     }
     return [self subarrayWithRange:range];
 }
