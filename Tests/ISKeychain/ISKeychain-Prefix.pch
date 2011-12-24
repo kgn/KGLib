@@ -1,7 +1,0 @@
-//
-// Prefix header for all source files of the 'ISKeychain' target in the 'ISKeychain' project
-//
-
-#ifdef __OBJC__
-    #import <Foundation/Foundation.h>
-#endif
