@@ -9,11 +9,9 @@
 
 @implementation KGProcess
 
-//change process into front process
 + (void)transformToForegroundApplication{
     ProcessSerialNumber psn = {0, kCurrentProcess};
     TransformProcessType(&psn, kProcessTransformToForegroundApplication);
-    SetFrontProcess(&psn);    
 }
 
 + (void)setApplicationFront{
