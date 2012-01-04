@@ -18,9 +18,8 @@
         ProcessSerialNumber psnx = {0, kNoProcess};
         GetNextProcess(&psnx);
         SetFrontProcess(&psnx);
-        dispatch_async(dispatch_get_main_queue(), ^{
-            SetFrontProcess(&psn);
-        });
+        [self performSelector:@selector(setApplicationFront) 
+                   withObject:nil afterDelay:0.5f];
     }
 }
 
