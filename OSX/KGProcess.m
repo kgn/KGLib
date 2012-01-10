@@ -6,6 +6,7 @@
 //
 
 #import "KGProcess.h"
+#import <Carbon/Carbon.h>
 
 @implementation KGProcess
 
@@ -15,6 +16,7 @@
     ProcessSerialNumber psn = {0, kCurrentProcess};
     OSStatus returnCode = TransformProcessType(&psn, kProcessTransformToForegroundApplication);
     if(returnCode == 0){
+        SetSystemUIMode(kUIModeNormal, 0);
         ProcessSerialNumber psnx = {0, kNoProcess};
         GetNextProcess(&psnx);
         SetFrontProcess(&psnx);
