@@ -18,16 +18,19 @@
     return range;
 }
 
-- (void)replaceString:(NSString *)src withString:(NSString *)dst andLink:(NSURL *)url withTooltip:(NSString *)tooltip{
+- (void)replaceString:(NSString *)src withString:(NSString *)dst andAttributes:(NSDictionary *)attributes{
     NSRange range = [self replaceString:src withString:dst];
-    if (range.length > 0) {
-        if(url != nil){
-            [self addAttribute:NSLinkAttributeName value:url range:range];
-        }
-        if(tooltip != nil){
-            [self addAttribute:NSToolTipAttributeName value:tooltip range:range];
-        }
+    if(range.length > 0 && attributes){
+        [self addAttributes:attributes range:range];
     }
+}
+
+- (void)replaceString:(NSString *)src withString:(NSString *)dst andLink:(NSURL *)url withTooltip:(NSString *)tooltip{
+    NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
+                           url, NSLinkAttributeName, 
+                           tooltip, NSToolTipAttributeName,                                     
+                           nil];
+    [self replaceString:src withString:dst andAttributes:attrs];
 }
 
 - (void)addTextShadow:(NSShadow *)shadow{

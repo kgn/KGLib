@@ -10,6 +10,7 @@
 @interface NSMutableAttributedString(KG)
 
 - (NSRange)replaceString:(NSString *)src withString:(NSString *)dst;
+- (void)replaceString:(NSString *)src withString:(NSString *)dst andAttributes:(NSDictionary *)attributes;
 - (void)replaceString:(NSString *)src withString:(NSString *)dst andLink:(NSURL *)url withTooltip:(NSString *)tooltip;
 - (void)addTextShadow:(NSShadow *)shadow;
 
