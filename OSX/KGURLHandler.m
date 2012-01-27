@@ -53,7 +53,7 @@
 }
 
 + (id)handlerWithScheme:(NSString *)scheme andIdentifier:(NSString *)identifier{
-    return [[[self class] alloc] initWithScheme:scheme andIdentifier:identifier];
+    return [[[[self class] alloc] initWithScheme:scheme andIdentifier:identifier] autorelease];
 }
 
 - (id)initWithScheme:(NSString *)scheme andIdentifier:(NSString *)identifier{
