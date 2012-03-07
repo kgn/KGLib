@@ -12,8 +12,8 @@
 
 + (FinderApplication *)finder{
     static FinderApplication *finderApp = nil;
-    if(!finderApp){
-        finderApp = [[SBApplication applicationWithBundleIdentifier:@"com.apple.finder"] retain];
+    if(finderApp == nil){
+        finderApp = [SBApplication applicationWithBundleIdentifier:@"com.apple.finder"];
     }
     return finderApp;
 }
@@ -32,14 +32,14 @@
 
 + (NSArray *)selectedFinderURLs{
     NSMutableArray *selected = [[NSMutableArray alloc] init];
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    for(FinderItem *item in [[[KGFinder finder] selection] get]){
-        if([item respondsToSelector:@selector(URL)]){
-            [selected addObject:[[NSURL URLWithString:[item URL]] path]];
+    @autoreleasepool{
+        for(FinderItem *item in [[[KGFinder finder] selection] get]){
+            if([item respondsToSelector:@selector(URL)]){
+                [selected addObject:[NSURL URLWithString:[item URL]]];
+            }
         }
     }
-    [pool drain];
-    return [selected autorelease];
+    return selected;
 }
 
 @end
