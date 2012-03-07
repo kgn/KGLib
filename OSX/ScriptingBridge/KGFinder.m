@@ -25,7 +25,10 @@
     FinderWindow *frontWindow = [[[KGFinder finder] windows] objectAtIndex:0];
     FinderFolder *folder = [[frontWindow properties] objectForKey:@"target"];
     if([folder respondsToSelector:@selector(URL)]){
-        return [[NSURL URLWithString:[folder URL]] path];
+        NSURL *url = [NSURL URLWithString:[folder URL]];
+        NSString *scheme = [url scheme];
+        NSString *path = [url path];
+        return [NSString stringWithFormat:@"%@://%@", scheme, path];
     }
     return nil;
 }
@@ -35,7 +38,10 @@
     @autoreleasepool{
         for(FinderItem *item in [[[KGFinder finder] selection] get]){
             if([item respondsToSelector:@selector(URL)]){
-                [selected addObject:[NSURL URLWithString:[item URL]]];
+                NSURL *url = [NSURL URLWithString:[item URL]];
+                NSString *scheme = [url scheme];
+                NSString *path = [url path];                
+                [selected addObject:[NSString stringWithFormat:@"%@://%@", scheme, path]];
             }
         }
     }
