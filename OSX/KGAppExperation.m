@@ -28,11 +28,14 @@
     compileDateArray = [compileDateArray filteredArrayUsingPredicate:noEmptyStrings];
 
     //convert the short month string into the month's number
+    NSLocale *gregorianLoc = [[NSLocale alloc] initWithLocaleIdentifier:NSGregorianCalendar];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:NSGregorianCalendar]];
+    [dateFormatter setLocale:gregorianLoc];
     NSArray *shortMonths = [dateFormatter shortMonthSymbols];
     NSInteger compileMonth = [shortMonths indexOfObject:[compileDateArray objectAtIndex:0]]+1;
-
+    [gregorianLoc release];
+    [dateFormatter release];
+    
     //convert the strings to integers
     NSInteger compileDay = [[compileDateArray objectAtIndex:1] intValue];
     NSInteger compileYear = [[compileDateArray objectAtIndex:2] intValue];
@@ -45,11 +48,12 @@
 
     //days delta code from Jeff Lamarche's NSDate Category
     //http://iphonedevelopment.blogspot.com/2009/07/category-on-nsdate.html
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *components = [gregorian components:NSDayCalendarUnit
+    NSCalendar *gregorianCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *components = [gregorianCal components:NSDayCalendarUnit
                                                 fromDate:compileDate
                                                   toDate:[NSDate date]//now
                                                  options:0];
+    [gregorianCal release];
     NSInteger daysDelta = [components day];
 
     //calculate how many days are left

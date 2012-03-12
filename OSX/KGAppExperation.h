@@ -5,11 +5,13 @@
 //  Created by David Keegan on 6/22/10.
 //
 
+#import <Foundation/Foundation.h>
+
 //Here's an example of how to block and quit an application that has expired
 /*
 - (void)applicationWillFinishLaunching:(NSNotification *)notification{
-    NSInteger daysLeft = [KGExpirationManager daysLeftUntilExpiration:14 withCompileTimeZone:[NSTimeZone timeZoneWithName:@"PST"]];
-    NSLog(@"days left: %d", daysLeft);
+    NSInteger daysLeft = [KGAppExperation daysLeftUntilExpiration:14 withCompileTimeZone:[NSTimeZone timeZoneWithName:@"PST"]];
+    NSLog(@"days left: %lu", daysLeft);
 
     if(daysLeft == 0){
         NSString *appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"];
