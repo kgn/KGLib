@@ -14,17 +14,17 @@
     return [pasteboard stringForType:NSPasteboardTypeString];
 }
 
-+ (void)copyStringToGeneralPasteBoard:(NSString *)string{
++ (void)copyString:(NSString *)string{
     NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
     [pasteboard declareTypes:[NSArray arrayWithObject:NSPasteboardTypeString] owner:nil];
     [pasteboard setString:string forType:NSPasteboardTypeString];
 }
 
-+ (void)copyHTMLToGeneralPasteBoard:(NSString *)html{
++ (void)copyString:(NSString *)string andHTML:(NSString *)html{
     NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
     [pasteboard declareTypes:[NSArray arrayWithObjects:NSHTMLPboardType, NSPasteboardTypeString, nil] owner:nil];
     [pasteboard setString:html forType:NSHTMLPboardType];
-    [pasteboard setString:html forType:NSPasteboardTypeString];
+    [pasteboard setString:string forType:NSPasteboardTypeString];
 }
 
 @end

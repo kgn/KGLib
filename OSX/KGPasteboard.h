@@ -13,7 +13,7 @@
 @interface KGPasteboard : NSObject
 
 + (NSString *)generalPasteBoardString;
-+ (void)copyStringToGeneralPasteBoard:(NSString *)string;
-+ (void)copyHTMLToGeneralPasteBoard:(NSString *)html;
++ (void)copyString:(NSString *)string;
++ (void)copyString:(NSString *)string andHTML:(NSString *)html;
 
 @end
