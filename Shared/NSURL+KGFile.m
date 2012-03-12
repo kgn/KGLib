@@ -40,9 +40,6 @@
         return nil;
     }
     
-    if(volURL == nil){
-        return [NSURL fileURLWithPath:[NSString pathWithComponents:pathComponents]];
-    }
     return [volURL URLByAppendingPathComponent:[NSString pathWithComponents:pathComponents]];
 }
 
