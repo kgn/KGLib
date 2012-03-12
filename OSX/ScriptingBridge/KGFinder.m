@@ -21,7 +21,7 @@
 + (NSString *)activeFinderWindowURL{
     FinderWindow *frontWindow = [[[KGFinder finder] windows] objectAtIndex:0];
     FinderFolder *folder = [[frontWindow properties] objectForKey:@"target"];
-    if([folder respondsToSelector:@selector(URL)]){
+    if([folder respondsToSelector:@selector(URL)] && [folder URL] != nil){
         return [[NSURL URLWithString:[folder URL]] path];
     }
     return nil;
@@ -31,7 +31,7 @@
     NSMutableArray *selected = [[NSMutableArray alloc] init];
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     for(FinderItem *item in [[[KGFinder finder] selection] get]){
-        if([item respondsToSelector:@selector(URL)]){
+        if([item respondsToSelector:@selector(URL)] && [item URL] != nil){
             [selected addObject:[[NSURL URLWithString:[item URL]] path]];
         }
     }
