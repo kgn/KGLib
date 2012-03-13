@@ -41,8 +41,6 @@
     return [newString substringFromIndex:i];
 }
 
-<<<<<<< Updated upstream
-=======
 - (NSURL *)volumeMountURLWithError:(NSError **)error{
     NSURL *testURL = [NSURL fileURLWithPath:self];
     NSMutableArray *pathComponents = [NSMutableArray array];
@@ -92,5 +90,4 @@
     return [volURL URLByAppendingPathComponent:[NSString pathWithComponents:pathComponents]];
 }
 
->>>>>>> Stashed changes
 @end
