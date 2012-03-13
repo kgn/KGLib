@@ -13,6 +13,6 @@
 - (NSString *)validFilename;
 - (NSString *)validFilenameAllowHidden:(BOOL)allowHidden;
 
-- (NSURL *)volumeMountURLWithError:(NSError **)error;
+- (NSString *)volumeMountURLWithError:(NSError **)error;
 
 @end

@@ -41,7 +41,7 @@
     return [newString substringFromIndex:i];
 }
 
-- (NSURL *)volumeMountURLWithError:(NSError **)error{
+- (NSString *)volumeMountURLWithError:(NSError **)error{
     NSURL *testURL = [NSURL fileURLWithPath:self];
     NSMutableArray *pathComponents = [NSMutableArray array];
     while(testURL != nil){
@@ -87,7 +87,13 @@
     }   
 #endif
     
-    return [volURL URLByAppendingPathComponent:[NSString pathWithComponents:pathComponents]];
+    // remove the username from the path if it's there
+    NSURL *fullURL= [volURL URLByAppendingPathComponent:[NSString pathWithComponents:pathComponents]];
+    NSURL *trimedUrl = [[[NSURL alloc] initWithScheme:[fullURL scheme] host:[fullURL host] path:[fullURL path]] autorelease];
+    // ; or ? doesn't get escaped so do it manually
+    return [[[trimedUrl absoluteString] 
+            stringByReplacingOccurrencesOfString:@";" withString:@"%3B"] 
+            stringByReplacingOccurrencesOfString:@"?" withString:@"%3F"];
 }
 
 @end
