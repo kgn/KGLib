@@ -87,6 +87,10 @@
     }   
 #endif
     
+    if(volURL == nil){
+        return nil;
+    }
+    
     // remove the username from the path if it's there
     NSURL *fullURL= [volURL URLByAppendingPathComponent:[NSString pathWithComponents:pathComponents]];
     NSURL *trimedUrl = [[[NSURL alloc] initWithScheme:[fullURL scheme] host:[fullURL host] path:[fullURL path]] autorelease];
