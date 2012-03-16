@@ -32,8 +32,8 @@
 
 @interface KGAppExperation : NSObject
 
-//Days left = compile day - current day <= expiration
-//The time zone should be set to the time zone the code was compiled in
+/// Days left = compile day - current day <= expiration
+/// The time zone should be set to the time zone the code was compiled in
 + (NSUInteger)daysLeftUntilExpiration:(NSUInteger)days withCompileTimeZone:(NSTimeZone *)timeZone;
 
 @end

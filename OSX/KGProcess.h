@@ -11,7 +11,10 @@
 
 @interface KGProcess : NSObject
 
+/// Transform the process into a forground application
 + (void)transformToForegroundApplication;
+
+/// Set the application as the front most one
 + (void)setApplicationFront;
 
 @end
