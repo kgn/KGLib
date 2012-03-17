@@ -7,6 +7,7 @@
 //
 
 #import "NSString+KGFile.h"
+#import <AppKit/AppKit.h>
 
 @implementation NSString(KGFile)
 
@@ -65,29 +66,29 @@
     }
     
     NSURL *volURL = nil;
-#if __MAC_OS_X_VERSION_MAX_ALLOWED >= 1070
-    if(![[NSURL fileURLWithPath:self] getResourceValue:&volURL forKey:NSURLVolumeURLForRemountingKey error:error]){
-        return nil;
-    }
-#else
-    FSRef pathRef;
-    FSPathMakeRef((UInt8*)[self fileSystemRepresentation], &pathRef, NULL);
-    FSCatalogInfo catalogInfo;
-    OSErr osErr = FSGetCatalogInfo(&pathRef, kFSCatInfoVolume, &catalogInfo, NULL, NULL, NULL);
-    FSVolumeRefNum volumeRefNum = 0;
-    if(osErr == noErr){
-        volumeRefNum = catalogInfo.volume;
-    }
-    CFURLRef serverLocation;
-    OSStatus result = FSCopyURLForVolume(volumeRefNum, &serverLocation);
-    if(result == noErr){
-        volURL = (NSURL *)serverLocation;
+    if(floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_6){
+        if(![[NSURL fileURLWithPath:self] getResourceValue:&volURL forKey:NSURLVolumeURLForRemountingKey error:error]){
+            return nil;
+        }
     }else{
-        return nil;
-    }   
-#endif
+        FSRef pathRef;
+        FSPathMakeRef((UInt8*)[self fileSystemRepresentation], &pathRef, NULL);
+        FSCatalogInfo catalogInfo;
+        OSErr osErr = FSGetCatalogInfo(&pathRef, kFSCatInfoVolume, &catalogInfo, NULL, NULL, NULL);
+        FSVolumeRefNum volumeRefNum = 0;
+        if(osErr == noErr){
+            volumeRefNum = catalogInfo.volume;
+        }
+        CFURLRef serverLocation;
+        OSStatus result = FSCopyURLForVolume(volumeRefNum, &serverLocation);
+        if(result == noErr){
+            volURL = (NSURL *)serverLocation;
+        }else{
+            return nil;
+        }   
+    }
     
-    if(volURL == nil){
+    if(volURL == nil || [volURL isFileURL]){
         return nil;
     }
     
