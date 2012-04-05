@@ -148,8 +148,9 @@
 
 - (void)mouseDown:(NSEvent *)theEvent{
     if(self.isEnabled){
+        self.rating = [self windowPointToPercentage:theEvent.locationInWindow];        
         if(_callback){
-            _callback([self windowPointToPercentage:theEvent.locationInWindow]);
+            _callback(self.rating);
         }
     }
 }
