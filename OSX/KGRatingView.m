@@ -98,7 +98,7 @@
         [self addSubview:_cell5];
         
         NSTrackingArea *trackingArea = 
-        [[NSTrackingArea alloc] initWithRect:self.bounds 
+        [[NSTrackingArea alloc] initWithRect:self.visibleRect 
                                      options:(NSTrackingMouseEnteredAndExited | 
                                               NSTrackingMouseMoved | 
                                               NSTrackingActiveAlways)
