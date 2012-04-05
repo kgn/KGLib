@@ -183,12 +183,12 @@ static CGFloat const KGMenuBarPopupFadeDuration = 0.15f;
     self.menuBarPopupPanel = nil;
 }
 
-- (void)drawImage:(NSImage *)aImage centeredInRect:(NSRect)aRect{
-    NSRect imageRect = NSMakeRect((CGFloat)round(aRect.size.width*0.5f-aImage.size.width*0.5f),
-                                  (CGFloat)round(aRect.size.height*0.5f-aImage.size.height*0.5f),
-                                  aImage.size.width, 
-                                  aImage.size.height);
-    [aImage drawInRect:imageRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0f];
+- (void)drawImage:(NSImage *)image centeredInRect:(NSRect)rect{
+    NSRect imageRect = NSZeroRect;
+    imageRect.origin.x = round(KGMidWidth(rect)-image.size.width*0.5f);
+    imageRect.origin.y = round(KGMidHeight(rect)-image.size.height*0.5f);    
+    imageRect.size = image.size;
+    [image drawInRect:imageRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0f];
 }
 
 - (void)drawRect:(NSRect)rect{
