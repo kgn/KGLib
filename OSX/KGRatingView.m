@@ -104,7 +104,6 @@
                                               NSTrackingActiveAlways)
                                        owner:self userInfo:nil];
         [self addTrackingArea:trackingArea];
-        [trackingArea release];
         
         [self updateViewForRating:0];
         _enabled = YES;
@@ -120,7 +119,6 @@
 }
 
 - (void)setRatingChangedCallback:(KGRatingViewCallback)block{
-    [_callback release];
     _callback = [block copy];
 }
 
@@ -177,9 +175,6 @@
         [[NSColor whiteColor] setFill];
         [ovalPath fill];
         [NSGraphicsContext restoreGraphicsState];
-        
-        //// Cleanup
-        [shadow release];
     }];    
 }
 
@@ -213,9 +208,6 @@
         [[NSColor whiteColor] setFill];
         [starPath fill];
         [NSGraphicsContext restoreGraphicsState];
-        
-        //// Cleanup
-        [shadow release];
     }];
 }
 
@@ -247,10 +239,6 @@
         [[NSColor whiteColor] setFill];
         [bezierPath fill];
         [NSGraphicsContext restoreGraphicsState];
-        
-        
-        //// Cleanup
-        [shadow release];
     }];    
 }
 
