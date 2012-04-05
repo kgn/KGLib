@@ -3,7 +3,7 @@
 //  KGLib
 //
 //  Created by David Keegan on 1/17/11.
-//  Copyright 2011 David Keegan. All rights reserved.
+//  Copyright 2011-2012 David Keegan. All rights reserved.
 //
 
 #import "KGPopUpButtonImageCell.h"

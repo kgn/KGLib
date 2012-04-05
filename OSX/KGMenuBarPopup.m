@@ -3,7 +3,7 @@
 //  InScopeApps Status Menu
 //
 //  Created by David Keegan on 11/7/10.
-//  Copyright 2010-2011 David Keegan. All rights reserved.
+//  Copyright 2010-2012 David Keegan. All rights reserved.
 //
 
 #import "KGMenuBarPopup.h"
