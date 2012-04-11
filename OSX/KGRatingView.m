@@ -9,6 +9,8 @@
 #import "KGRatingView.h"
 #import "KGFoundation.h"
 #import "NSImage+BBlock.h"
+#import "NSTimer+BBlocks.h"
+#import "BBlock.h"
 
 @interface KGRatingView()
 - (NSUInteger)windowPointToPercentage:(NSPoint)aPoint;
@@ -22,11 +24,13 @@
     NSImageView *_cell1, *_cell2, 
     *_cell3, *_cell4, *_cell5;
     KGRatingViewCallback _callback;
+    BOOL _entered, _timerCleared;
 }
 
 @synthesize enabled = _enabled;
 @synthesize allowHalfRating = _allowHalfRating;
 @synthesize rating = _rating;
+@synthesize hoverDelay = _hoverDelay;
 
 - (NSUInteger)windowPointToPercentage:(NSPoint)aPoint{
     NSPoint viewPoint = [self convertPoint:aPoint fromView:nil];
@@ -74,6 +78,8 @@
 - (id)initWithFrame:(NSRect)frame{
     self = [super initWithFrame:frame];
     if(self != nil){
+        self.hoverDelay = 0.1;
+        
         NSRect cellRect = NSZeroRect;
         cellRect.size.width = round(NSWidth(self.bounds)/5);
         cellRect.size.height = NSHeight(self.bounds);
@@ -127,23 +133,31 @@
 
 - (void)mouseEntered:(NSEvent *)theEvent{
     if(self.isEnabled){
-        [[self window] setAcceptsMouseMovedEvents:YES];
-        [[self window] makeFirstResponder:self];
+        _entered = YES;
+        [NSTimer scheduledTimerWithTimeInterval:self.hoverDelay andBlock:^{
+            [BBlock dispatchOnMainThread:^{
+                if(_entered){                    
+                    _timerCleared = YES;
+                    [[self window] setAcceptsMouseMovedEvents:YES];
+                    [[self window] makeFirstResponder:self];
+                }                    
+            }];
+        }];
     }
 }
 
 - (void)mouseMoved:(NSEvent *)theEvent{
-    if(self.isEnabled){
+    if(self.isEnabled && _timerCleared){
         NSInteger rating = [self windowPointToPercentage:theEvent.locationInWindow];
         [self updateViewForRating:rating];
     }
 }
 
 - (void)mouseExited:(NSEvent *)theEvent{
-    if(self.isEnabled){
-        [[self window] setAcceptsMouseMovedEvents:NO];
-        [self updateViewForRating:self.rating];
-    }
+    _entered = NO;
+    _timerCleared = NO;
+    [[self window] setAcceptsMouseMovedEvents:NO];
+    [self updateViewForRating:self.rating];
 }
 
 - (void)mouseDown:(NSEvent *)theEvent{
