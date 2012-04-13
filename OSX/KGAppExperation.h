@@ -7,8 +7,8 @@
 
 #import <Foundation/Foundation.h>
 
-//Here's an example of how to block and quit an application that has expired
-/*
+/** Here's an example of how to block and quit an application that has expired:
+``` obj-c
 - (void)applicationWillFinishLaunching:(NSNotification *)notification{
     NSInteger daysLeft = [KGAppExperation daysLeftUntilExpiration:14 withCompileTimeZone:[NSTimeZone timeZoneWithName:@"PST"]];
     NSLog(@"days left: %lu", daysLeft);
@@ -28,7 +28,7 @@
         [NSApp terminate:self];
     }
 }
-*/
+```*/
 
 @interface KGAppExperation : NSObject
 

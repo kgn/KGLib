@@ -1,7 +1,28 @@
 ##OSX/KGAppExperation.h
 
-```obj-c
+###@interface KGAppExperation : NSObject
+
+Here's an example of how to block and quit an application that has expired:
+``` obj-c
 - (void)applicationWillFinishLaunching:(NSNotification *)notification{
+    NSInteger daysLeft = [KGAppExperation daysLeftUntilExpiration:14 withCompileTimeZone:[NSTimeZone timeZoneWithName:@"PST"]];
+    NSLog(@"days left: %lu", daysLeft);
+
+    if(daysLeft == 0){
+        NSString *appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"];
+        NSString *appVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
+
+        NSLog(@"%@ %@ has expired", appName, appVersion);
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert addButtonWithTitle:@"OK"];
+        [alert setMessageText:[NSString stringWithFormat:@"%@ has expired", appName]];
+        [alert setInformativeText:[NSString stringWithFormat:@"The beta period for version %@ has expired.", appVersion]];
+        [alert setAlertStyle:NSCriticalAlertStyle];
+        [alert runModal];
+
+        [NSApp terminate:self];
+    }
+}
 ```
 
 Days left = compile day - current day <= expiration
@@ -12,7 +33,19 @@ The time zone should be set to the time zone the code was compiled in
 + (NSUInteger)daysLeftUntilExpiration:(NSUInteger)days withCompileTimeZone:(NSTimeZone *)timeZone;
 ```
 
+##OSX/KGDivider.h
+
+###@interface KGDivider : NSSplitView
+
+###@interface KGDividerDelegate : NSObject <NSSplitViewDelegate>
+
 ##OSX/KGGrowl.h
+
+###@interface KGGrowl : NSObject <GrowlApplicationBridgeDelegate>
+
+```obj-c
+@property (strong, readonly) NSString *notification;
+```
 
 ```obj-c
 - (id)initWithNotification:(NSString *)newNotification;
@@ -23,6 +56,8 @@ The time zone should be set to the time zone the code was compiled in
 ```
 
 ##OSX/KGLogin.h
+
+###@interface KGLogin : NSObject
 
 ```obj-c
 + (NSURL *)appURL;
@@ -46,6 +81,15 @@ The time zone should be set to the time zone the code was compiled in
 
 ##OSX/KGMenuBarPopup.h
 
+###@interface KGMenuBarPopup : NSObject <NSWindowDelegate>
+
+```obj-c
+@property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) NSImage *image;
+@property (nonatomic, strong) NSImage *alternateImage;
+@property (nonatomic) CGFloat width;
+```
+
 ```obj-c
 - (id)initWithWidth:(CGFloat)width view:(NSView *)view;
 ```
@@ -63,6 +107,8 @@ The time zone should be set to the time zone the code was compiled in
 ```
 
 ##OSX/KGPasteboard.h
+
+###@interface KGPasteboard : NSObject
 
 The general use pasteboard
 
@@ -82,7 +128,13 @@ Copy a string to the general pasteboard and html to the general html pasteboard
 + (void)copyString:(NSString *)string andHTML:(NSString *)html;
 ```
 
+##OSX/KGPopUpButtonImageCell.h
+
+###@interface KGPopUpButtonImageCell : NSPopUpButtonCell
+
 ##OSX/KGProcess.h
+
+###@interface KGProcess : NSObject
 
 Transform the process into a forground application
 
@@ -98,11 +150,22 @@ Set the application as the front most one
 
 ##OSX/KGRatingView.h
 
+###@interface KGRatingView : NSView
+
+```obj-c
+@property (nonatomic, getter=isEnabled) BOOL enabled;
+@property (nonatomic) BOOL allowHalfRating;
+@property (nonatomic) NSUInteger rating;
+@property (nonatomic) NSTimeInterval hoverDelay;
+```
+
 ```obj-c
 - (void)setRatingChangedCallback:(KGRatingViewCallback)block;
 ```
 
 ##OSX/KGURLHandler.h
+
+###@interface KGURLHandler : NSObject
 
 ```obj-c
 + (id)handlerWithScheme:(NSString *)scheme andIdentifier:(NSString *)identifier;
@@ -122,6 +185,8 @@ Set the application as the front most one
 
 ##OSX/ScriptingBridge/KGFinder.h
 
+###@interface KGFinder : NSObject {}
+
 ```obj-c
 + (FinderApplication *)finder;
 ```
@@ -135,6 +200,8 @@ Set the application as the front most one
 ```
 
 ##OSX/ScriptingBridge/KGTerminal.h
+
+###@interface KGTerminal : NSObject
 
 ```obj-c
 + (NSString *)appId;
@@ -160,7 +227,11 @@ Set the application as the front most one
 + (void)runCommand:(NSString *)command;
 ```
 
+##Shared/KGFoundation.h
+
 ##Shared/KGImageCache.h
+
+###@interface KGImageCache : NSObject
 
 ```obj-c
 - (id)initWithCapacity:(NSUInteger)capacity;
@@ -196,6 +267,8 @@ Set the application as the front most one
 
 ##Shared/KGKeychain.h
 
+###@interface KGKeychain : NSObject
+
 ```obj-c
 + (BOOL)passwordExistsForService:(NSString *)serviceName andAccount:(NSString *)accountName;
 ```
@@ -212,7 +285,11 @@ Set the application as the front most one
 + (BOOL)removeEntryForService:(NSString *)serviceName andAccount:(NSString *)accountName;
 ```
 
+##Shared/KGXPath.h
+
 ##Shared/NSArray+KG.h
+
+###@interface NSArray(KG)
 
 Return the first object in the array
 
@@ -234,6 +311,8 @@ Return the last `n` objects in the array
 
 ##Shared/NSDictionary+KGJSON.h
 
+###@interface NSDictionary(KGJSON)
+
 ```obj-c
 - (NSUInteger)uintSafelyFromKey:(id)key;
 ```
@@ -252,6 +331,8 @@ Return the last `n` objects in the array
 
 ##Shared/NSMutableAttributedString+KG.h
 
+###@interface NSMutableAttributedString(KG)
+
 ```obj-c
 - (NSRange)replaceString:(NSString *)src withString:(NSString *)dst;
 ```
@@ -269,6 +350,8 @@ Return the last `n` objects in the array
 ```
 
 ##Shared/NSString+KGFile.h
+
+###@interface NSString(KGFile)
 
 Return a valid filename
 
@@ -291,6 +374,8 @@ Example: `/Volumes/slave1` -> `afp://Slave%20One/slave1`
 ```
 
 ##Shared/NSString+KGHTTP.h
+
+###@interface NSString(KGHTTP)
 
 Encode a dictionary into a url string.
 
