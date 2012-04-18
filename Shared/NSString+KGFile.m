@@ -82,7 +82,11 @@
         CFURLRef serverLocation;
         OSStatus result = FSCopyURLForVolume(volumeRefNum, &serverLocation);
         if(result == noErr){
+#if !__has_feature(objc_arc)            
             volURL = (NSURL *)serverLocation;
+#else
+            volURL = (__bridge NSURL *)serverLocation;
+#endif            
         }else{
             return nil;
         }   
@@ -94,7 +98,10 @@
     
     // remove the username from the path if it's there
     NSURL *fullURL= [volURL URLByAppendingPathComponent:[NSString pathWithComponents:pathComponents]];
-    NSURL *trimedUrl = [[[NSURL alloc] initWithScheme:[fullURL scheme] host:[fullURL host] path:[fullURL path]] autorelease];
+    NSURL *trimedUrl = [[NSURL alloc] initWithScheme:[fullURL scheme] host:[fullURL host] path:[fullURL path]];
+#if !__has_feature(objc_arc)
+    [trimedUrl autorelease];
+#endif
     // ; or ? doesn't get escaped so do it manually
     return [[[trimedUrl absoluteString] 
             stringByReplacingOccurrencesOfString:@";" withString:@"%3B"] 
