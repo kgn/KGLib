@@ -3,7 +3,7 @@
 //  KGLib
 //
 //  Created by David Keegan on 1/31/11.
-//  Copyright 2011 InScopeApps {+}. All rights reserved.
+//  Copyright 2011-12 David Keegan. All rights reserved.
 //
 //  Made possible by John Daniel's "ShellHere" http://www.etresoft.org/shellhere.html
 //

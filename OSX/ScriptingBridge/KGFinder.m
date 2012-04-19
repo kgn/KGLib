@@ -3,7 +3,7 @@
 //  KGLib
 //
 //  Created by David Keegan on 5/23/09.
-//  Copyright 2009-2011 InScopeApps{+}. All rights reserved.
+//  Copyright 2009-12 David Keegan. All rights reserved.
 //
 
 #import "KGFinder.h"
