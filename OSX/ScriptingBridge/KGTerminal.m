@@ -73,15 +73,8 @@
 }
 
 + (void)runCommand:(NSString *)command{
-    TerminalTab *currentTab = nil;
-    if(![[KGTerminal terminal] isRunning]){
-        SBElementArray *terminalWindows = [[KGTerminal terminal] windows];
-        TerminalWindow *lastTerminalWindow = [terminalWindows lastObject];
-        currentTab = [[lastTerminalWindow tabs] lastObject];
-    }
-
-    [[KGTerminal terminal] doScript:command in:currentTab];
-    [[KGTerminal terminal] activate];
+    [[KGTerminal terminal] doScript:command in:nil];    
+    [[KGTerminal terminal] activate]; 
 }
 
 @end
