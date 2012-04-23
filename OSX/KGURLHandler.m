@@ -5,8 +5,6 @@
 //  Created by David Keegan on 1/4/12.
 //  Copyright (c) 2012 David Keegan. All rights reserved.
 //
-//  NOTE: This file cannot work under arc and must be compiled with the -fno-objc-arc flag
-//
 
 #import "KGURLHandler.h"
 
@@ -35,25 +33,26 @@
         action(commandPath, arguments);
     }else if(_defaultAction){
         _defaultAction(commandPath, arguments);
-    }else{
-        NSLog(@"No action defined for command path: %@", commandPath);
     }
 }
 
 - (void)registerDefaultAction:(KGURLHandlerAction)action{
-    Block_release(_defaultAction);
-    _defaultAction = Block_copy(action);
+#if !__has_feature(objc_arc)    
+    [_defaultAction release];
+#endif
+    _defaultAction = [action copy];
 }
 
 - (void)registerCommandPath:(NSString *)path withAction:(KGURLHandlerAction)action{
-    KGURLHandlerAction oldAction = [_actions objectForKey:path];
-    Block_release(oldAction);
-    
-    [_actions setObject:Block_copy(action) forKey:path];
+    [_actions setObject:action forKey:path];
 }
 
 + (id)handlerWithScheme:(NSString *)scheme andIdentifier:(NSString *)identifier{
+#if !__has_feature(objc_arc)    
     return [[[[self class] alloc] initWithScheme:scheme andIdentifier:identifier] autorelease];
+#else
+    return [[[self class] alloc] initWithScheme:scheme andIdentifier:identifier];
+#endif
 }
 
 - (id)initWithScheme:(NSString *)scheme andIdentifier:(NSString *)identifier{
@@ -68,7 +67,11 @@
          andSelector:@selector(getUrl:withReplyEvent:) 
          forEventClass:kInternetEventClass 
          andEventID:kAEGetURL];
+#if !__has_feature(objc_arc)          
         LSSetDefaultHandlerForURLScheme((CFStringRef)_scheme, (CFStringRef)_identifier);
+#else        
+        LSSetDefaultHandlerForURLScheme((__bridge CFStringRef)_scheme, (__bridge CFStringRef)_identifier);        
+#endif        
     }
     return self;
 }
@@ -78,15 +81,14 @@
             [self class], _scheme, _identifier];
 }
 
+#if !__has_feature(objc_arc)
 - (void)dealloc{
     [_scheme release];
     [_identifier release];
-    Block_release(_defaultAction);
-    for(KGURLHandlerAction action in [_actions allValues]){
-        Block_release(action);
-    }
+    [_defaultAction release];
     [_actions release];
     [super dealloc];
 }
+#endif
 
 @end

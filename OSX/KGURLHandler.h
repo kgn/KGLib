@@ -11,10 +11,10 @@
 //  Example:
 //    KGURLHandler *urlHandler = [KGURLHandler handlerWithScheme:@"exampleapp" 
 //                                                 andIdentifier:[[NSBundle mainBundle] bundleIdentifier]];
-//    [urlHandler registerDefaultAction:^(NSString *comandPath, NSDictionary *arguments){
-//        NSLog(@"%@ %@", comandPath, arguments);
+//    [urlHandler registerDefaultAction:^(NSString *commandPath, NSDictionary *arguments){
+//        NSLog(@"%@ %@", commandPath, arguments);
 //    }];
-//    [urlHandler registerCommandPath:@"success" withAction:^(NSString *comandPath, NSDictionary *arguments){
+//    [urlHandler registerCommandPath:@"success" withAction:^(NSString *commandPath, NSDictionary *arguments){
 //        NSLog(@"%@", arguments);
 //    }];
 
@@ -25,7 +25,7 @@
 + (id)handlerWithScheme:(NSString *)scheme andIdentifier:(NSString *)identifier;
 - (id)initWithScheme:(NSString *)scheme andIdentifier:(NSString *)identifier;
 
-typedef void (^KGURLHandlerAction)(NSString *comandPath, NSDictionary *arguments);
+typedef void (^KGURLHandlerAction)(NSString *commandPath, NSDictionary *arguments);
 - (void)registerDefaultAction:(KGURLHandlerAction)action;
 - (void)registerCommandPath:(NSString *)path withAction:(KGURLHandlerAction)action;
 
