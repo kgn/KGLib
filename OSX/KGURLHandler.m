@@ -44,7 +44,7 @@
 }
 
 - (void)registerCommandPath:(NSString *)path withAction:(KGURLHandlerAction)action{
-    [_actions setObject:action forKey:path];
+    [_actions setObject:[action copy] forKey:path];
 }
 
 + (id)handlerWithScheme:(NSString *)scheme andIdentifier:(NSString *)identifier{
@@ -67,7 +67,7 @@
          andSelector:@selector(getUrl:withReplyEvent:) 
          forEventClass:kInternetEventClass 
          andEventID:kAEGetURL];
-#if !__has_feature(objc_arc)          
+#if !__has_feature(objc_arc)
         LSSetDefaultHandlerForURLScheme((CFStringRef)_scheme, (CFStringRef)_identifier);
 #else        
         LSSetDefaultHandlerForURLScheme((__bridge CFStringRef)_scheme, (__bridge CFStringRef)_identifier);        
