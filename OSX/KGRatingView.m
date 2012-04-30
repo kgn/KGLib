@@ -9,7 +9,7 @@
 #import "KGRatingView.h"
 #import "KGFoundation.h"
 #import "NSImage+BBlock.h"
-#import "NSTimer+BBlocks.h"
+#import "NSTimer+BBlock.h"
 #import "BBlock.h"
 
 @interface KGRatingView()
