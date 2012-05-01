@@ -184,7 +184,7 @@
         [shadow setShadowBlurRadius: 0];
         
         //// Oval Drawing
-        NSBezierPath* ovalPath = [NSBezierPath bezierPathWithOvalInRect: NSMakeRect(0, 1, 7, 7)];
+        NSBezierPath* ovalPath = [NSBezierPath bezierPathWithOvalInRect: NSMakeRect(0, 1, 6, 6)];
         [NSGraphicsContext saveGraphicsState];
         [shadow set];
         [[NSColor whiteColor] setFill];
@@ -194,7 +194,7 @@
 }
 
 - (NSImage *)activeImage{
-    return [NSImage imageWithIdentifier:NSStringFromSelector(_cmd) forSize:NSMakeSize(27, 28) andDrawingBlock:^{
+    return [NSImage imageWithIdentifier:NSStringFromSelector(_cmd) forSize:NSMakeSize(23, 24) andDrawingBlock:^{
         //// Color Declarations
         NSColor* color = [NSColor colorWithCalibratedRed: 0 green: 0 blue: 0 alpha: 0.5];
         
@@ -206,17 +206,17 @@
         
         //// Star Drawing
         NSBezierPath* starPath = [NSBezierPath bezierPath];
-        [starPath moveToPoint: NSMakePoint(13.5, 28)];
-        [starPath lineToPoint: NSMakePoint(10, 18)];
-        [starPath lineToPoint: NSMakePoint(-0, 18)];
-        [starPath lineToPoint: NSMakePoint(7.71, 11.29)];
-        [starPath lineToPoint: NSMakePoint(5.14, 1)];
-        [starPath lineToPoint: NSMakePoint(13.5, 7.39)];
-        [starPath lineToPoint: NSMakePoint(21.86, 1)];
-        [starPath lineToPoint: NSMakePoint(19.29, 11.29)];
-        [starPath lineToPoint: NSMakePoint(27, 18)];
-        [starPath lineToPoint: NSMakePoint(17, 18)];
-        [starPath lineToPoint: NSMakePoint(13.5, 28)];
+        [starPath moveToPoint: NSMakePoint(11.5, 23)];
+        [starPath lineToPoint: NSMakePoint(8.52, 14.87)];
+        [starPath lineToPoint: NSMakePoint(0, 14.37)];
+        [starPath lineToPoint: NSMakePoint(6.57, 9.38)];
+        [starPath lineToPoint: NSMakePoint(4.38, 1)];
+        [starPath lineToPoint: NSMakePoint(11.5, 6.21)];
+        [starPath lineToPoint: NSMakePoint(18.62, 1)];
+        [starPath lineToPoint: NSMakePoint(16.43, 9.38)];
+        [starPath lineToPoint: NSMakePoint(23, 14.37)];
+        [starPath lineToPoint: NSMakePoint(14.48, 14.87)];
+        [starPath lineToPoint: NSMakePoint(11.5, 23)];
         [starPath closePath];
         [NSGraphicsContext saveGraphicsState];
         [shadow set];
@@ -227,7 +227,7 @@
 }
 
 - (NSImage *)halfImage{
-    return [NSImage imageWithIdentifier:NSStringFromSelector(_cmd) forSize:NSMakeSize(27, 28) andDrawingBlock:^{
+    return [NSImage imageWithIdentifier:NSStringFromSelector(_cmd) forSize:NSMakeSize(23, 24) andDrawingBlock:^{
         //// Color Declarations
         NSColor* color = [NSColor colorWithCalibratedRed: 0 green: 0 blue: 0 alpha: 0.5];
         
@@ -238,21 +238,21 @@
         [shadow setShadowBlurRadius: 0];
         
         //// Bezier Drawing
-        NSBezierPath* halfStarPath = [NSBezierPath bezierPath];
-        [halfStarPath moveToPoint: NSMakePoint(14, 26.57)];
-        [halfStarPath lineToPoint: NSMakePoint(14, 7.01)];
-        [halfStarPath lineToPoint: NSMakePoint(13.5, 7.39)];
-        [halfStarPath lineToPoint: NSMakePoint(5.14, 1)];
-        [halfStarPath lineToPoint: NSMakePoint(7.71, 11.29)];
-        [halfStarPath lineToPoint: NSMakePoint(-0, 18)];
-        [halfStarPath lineToPoint: NSMakePoint(10, 18)];
-        [halfStarPath lineToPoint: NSMakePoint(13.5, 28)];
-        [halfStarPath lineToPoint: NSMakePoint(14, 26.57)];
-        [halfStarPath closePath];
+        NSBezierPath* bezierPath = [NSBezierPath bezierPath];
+        [bezierPath moveToPoint: NSMakePoint(12, 21.64)];
+        [bezierPath lineToPoint: NSMakePoint(12, 5.84)];
+        [bezierPath lineToPoint: NSMakePoint(11.5, 6.21)];
+        [bezierPath lineToPoint: NSMakePoint(4.38, 1)];
+        [bezierPath lineToPoint: NSMakePoint(6.57, 9.38)];
+        [bezierPath lineToPoint: NSMakePoint(0, 14.37)];
+        [bezierPath lineToPoint: NSMakePoint(8.52, 14.87)];
+        [bezierPath lineToPoint: NSMakePoint(11.5, 23)];
+        [bezierPath lineToPoint: NSMakePoint(12, 21.64)];
+        [bezierPath closePath];
         [NSGraphicsContext saveGraphicsState];
         [shadow set];
         [[NSColor whiteColor] setFill];
-        [halfStarPath fill];
+        [bezierPath fill];
         [NSGraphicsContext restoreGraphicsState];
     }];    
 }
