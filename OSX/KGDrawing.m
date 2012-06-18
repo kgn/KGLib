@@ -21,7 +21,7 @@
     NSShadow *outer = [[NSShadow alloc] init];
     [outer setShadowColor:dropColor];
     [outer setShadowOffset:NSMakeSize(0, -1)];
-    [outer setShadowBlurRadius:0];
+    [outer setShadowBlurRadius:1];
     
     [NSGraphicsContext saveGraphicsState];
     [outer set];
