@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 David Keegan. All rights reserved.
 //
 
+#import <AppKit/AppKit.h>
 #import "KGDrawing.h"
 
 @implementation KGDrawing
@@ -25,6 +26,9 @@
     
     [NSGraphicsContext saveGraphicsState];
     [outer set];
+#if !__has_feature(objc_arc)
+    [outer release];
+#endif
     [mainColor setFill];
     [path fill];   
     
@@ -43,12 +47,18 @@
         [negativePath appendBezierPath:path];
         [negativePath setWindingRule:NSEvenOddWindingRule];
         
-        [NSGraphicsContext saveGraphicsState];
+        [NSGraphicsContext saveGraphicsState];       
         NSShadow *innerShadow = [inner copy];
+#if !__has_feature(objc_arc)
+        [inner release];
+#endif         
         CGFloat xOffset = innerShadow.shadowOffset.width + round(borderRect.size.width);
         CGFloat yOffset = innerShadow.shadowOffset.height;
         innerShadow.shadowOffset = NSMakeSize(xOffset + copysign(0.1, xOffset), yOffset + copysign(0.1, yOffset));
         [innerShadow set];
+#if !__has_feature(objc_arc)
+        [innerShadow release];
+#endif         
         [[NSColor grayColor] setFill];
         [path addClip];
         NSAffineTransform *transform = [NSAffineTransform transform];
