@@ -77,7 +77,7 @@
 }
 
 - (NSString *)description{
-    return [NSString stringWithFormat:@"<%@ %lu Scheme='%@' Identifier=%@>", 
+    return [NSString stringWithFormat:@"<%@ Scheme='%@' Identifier=%@>", 
             [self class], _scheme, _identifier];
 }
 
