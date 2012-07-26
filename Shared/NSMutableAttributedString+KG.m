@@ -26,10 +26,8 @@
 }
 
 - (void)replaceString:(NSString *)src withString:(NSString *)dst andLink:(NSURL *)url withTooltip:(NSString *)tooltip{
-    NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
-                           url, NSLinkAttributeName, 
-                           tooltip, NSToolTipAttributeName,                                     
-                           nil];
+    NSDictionary *attrs = @{NSLinkAttributeName: url, 
+                           NSToolTipAttributeName: tooltip};
     [self replaceString:src withString:dst andAttributes:attrs];
 }
 

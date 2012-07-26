@@ -14,7 +14,7 @@
     @autoreleasepool{
         for(NSString *key in [args allKeys]){
             NSString *escapedKey = [key stringWithURLEncoding];
-            NSString *value = [[args objectForKey:key] stringWithURLEncoding];
+            NSString *value = [args[key] stringWithURLEncoding];
             [argsAndValues addObject:[NSString stringWithFormat:@"%@=%@", escapedKey, value]];
         }
     }

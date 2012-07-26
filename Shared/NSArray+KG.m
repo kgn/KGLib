@@ -10,7 +10,7 @@
 @implementation NSArray(KG)
 
 - (id)firstObject{
-    return [self objectAtIndex:0];
+    return self[0];
 }
 
 - (NSArray *)firstObjects:(NSUInteger)count{

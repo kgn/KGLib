@@ -40,26 +40,26 @@
 }
 
 - (void)retainKey:(id)key{
-    NSInteger newCount = [[_retainCache objectForKey:key] integerValue]+1;
-    [_retainCache setObject:[NSNumber numberWithInteger:newCount] forKey:key];
+    NSInteger newCount = [_retainCache[key] integerValue]+1;
+    _retainCache[key] = @(newCount);
 }
 
 - (KGImageCacheImage *)imageForKey:(id)key{
-    return [_imageCache objectForKey:key];
+    return _imageCache[key];
 }
 
 - (void)setImage:(KGImageCacheImage *)image forKey:(id)key{
     if(image != nil){
-        [_imageCache setObject:image forKey:key];
+        _imageCache[key] = image;
     }
 }
 
 - (void)releaseKey:(id)key{
-    NSInteger newCount = [[_retainCache objectForKey:key] integerValue]-1;
+    NSInteger newCount = [_retainCache[key] integerValue]-1;
     if(newCount <= 0){
         [self removeKey:key];
     }else{
-        [_retainCache setObject:[NSNumber numberWithInteger:newCount] forKey:key];
+        _retainCache[key] = @(newCount);
     }
 }
 

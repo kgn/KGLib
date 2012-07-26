@@ -16,8 +16,7 @@ NSString *xmlCharToNSString(xmlChar *value){
         return nil;
     }
     NSString *string =
-    [NSString stringWithCString:(const char *)value
-                       encoding:NSUTF8StringEncoding];
+    @((const char *)value);
     xmlFree(value);
     return string;
 }

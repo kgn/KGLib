@@ -25,10 +25,10 @@
     NSMutableDictionary *urlArgs = [NSMutableDictionary dictionary];
     for(NSString *arg in [[url query] componentsSeparatedByString:@"&"]){
         NSArray *keyValue = [arg componentsSeparatedByString:@"="];
-        [urlArgs setObject:[keyValue objectAtIndex:1] forKey:[keyValue objectAtIndex:0]];
+        urlArgs[keyValue[0]] = keyValue[1];
     }
     NSDictionary *arguments = [NSDictionary dictionaryWithDictionary:urlArgs];
-    KGURLHandlerAction action = [_actions objectForKey:commandPath];
+    KGURLHandlerAction action = _actions[commandPath];
     if(action){
         action(commandPath, arguments);
     }else if(_defaultAction){
@@ -44,7 +44,7 @@
 }
 
 - (void)registerCommandPath:(NSString *)path withAction:(KGURLHandlerAction)action{
-    [_actions setObject:[action copy] forKey:path];
+    _actions[path] = [action copy];
 }
 
 + (id)handlerWithScheme:(NSString *)scheme andIdentifier:(NSString *)identifier{
